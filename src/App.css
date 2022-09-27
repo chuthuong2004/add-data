@@ -1,38 +1,102 @@
-.App {
-  text-align: center;
+body {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  letter-spacing: 1px;
+  font-size: 14px;
+  position: relative;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form-add {
+  border: 1px solid rgb(233, 229, 229);
+  width: 100%;
+  margin: 30px;
+  min-width:600px;
+  margin-bottom: 600px;
+  padding: 20px;
+  border-radius: 6px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form-add div {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.form-add div label {
+}
+.form-add div input,.form-add div textarea,.form-add div select {
+  /* flex: 1; */
+  /* width: 100%; */
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid rgb(231, 229, 229);
+  padding: 10px 10px;
+}
+.form-add .btn-add {
+  margin-top: 20px;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
-
-.App-link {
-  color: #61dafb;
+.form-add .btn-add button {
+  padding: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: rgb(50, 168, 50);
+  border: none;
+  color: rgb(34, 12, 12);
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 300px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logout-container span {
+  color: red;
+  text-align: center;
+  margin: 10px;
+}
+.login {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(230, 220, 220);
+  padding: 10px;
+  gap: 20px;
+  width: 400px;
+  border-radius:10px;
+}
+.login input {
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+}
+.login button {
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgb(11, 114, 7);
+}
+.logout {
+  position: fixed;
+  top:20px;
+  right: 100px;
+  background-color: red;
+  padding: 10px;
+  color: #ffffff;
+  border-radius: 10px;
+}
+button {
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
 }
