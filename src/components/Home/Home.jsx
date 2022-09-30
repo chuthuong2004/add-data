@@ -34,6 +34,7 @@ const Home = () => {
   const [keyword, setKeyword] = useState("");
   const [listKeyWords, setListKeyWords] = useState([]);
   const sizeRef = useRef();
+  const inputKeywordRef = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,54 +74,70 @@ const Home = () => {
     navigate("/login");
   };
   const handleCreateProduct = async () => {
-    const generateNewColors = () => {
-      let listColors = [];
-      colorsProduct.forEach(async (productColor) => {
-        if (
-          productColor.images.length > 0 &&
-          productColor.imageMedium &&
-          productColor.imageSmall
-        ) {
-          const data = new FormData();
-          productColor.images.forEach((imageFile) => {
-            data.append("images", imageFile);
-          });
-          data.append("imageMedium", productColor.imageMedium);
-          data.append("imageSmall", productColor.imageSmall);
-          try {
-            const res = await axiosClient.post("/upload/products", data);
-            if (res.files) {
-              listColors.push({
-                ...productColor,
-                imageMedium: `/public/products/${res.files.imageMedium[0].filename}`,
-                imageSmall: `/public/products/${res.files.imageSmall[0].filename}`,
-                images: res.files.images.map(
-                  (imageFile) => `/public/products/${imageFile.filename}`
-                ),
-              });
+    if (
+      inputProduct.name &&
+      inputProduct.description &&
+      inputProduct.price &&
+      inputProduct.discount &&
+      inputProduct.brand &&
+      inputProduct.category &&
+      inputProduct.deliveryReturnPolicy &&
+      inputProduct.colors.length > 0 &&
+      inputProduct.gender &&
+      inputProduct.keywords.length > 0 &&
+      inputProduct.preserveInformation
+    ) {
+      const generateNewColors = () => {
+        let listColors = [];
+        colorsProduct.forEach(async (productColor) => {
+          if (
+            productColor.images.length > 0 &&
+            productColor.imageMedium &&
+            productColor.imageSmall
+          ) {
+            const data = new FormData();
+            productColor.images.forEach((imageFile) => {
+              data.append("images", imageFile);
+            });
+            data.append("imageMedium", productColor.imageMedium);
+            data.append("imageSmall", productColor.imageSmall);
+            try {
+              const res = await axiosClient.post("/upload/products", data);
+              if (res.files) {
+                listColors.push({
+                  ...productColor,
+                  imageMedium: `/public/products/${res.files.imageMedium[0].filename}`,
+                  imageSmall: `/public/products/${res.files.imageSmall[0].filename}`,
+                  images: res.files.images.map(
+                    (imageFile) => `/public/products/${imageFile.filename}`
+                  ),
+                });
+              }
+            } catch (error) {
+              console.log(error);
             }
-          } catch (error) {
-            console.log(error);
           }
-        }
-      });
-      return listColors;
-    };
-    const newL = generateNewColors();
-    setTimeout(async () => {
-      try {
-        const res = await productApi.createProduct({
-          ...inputProduct,
-          colors: newL,
         });
-        if (res) {
-          handleClearState();
-          alert("Thêm thành công !");
+        return listColors;
+      };
+      const newL = generateNewColors();
+      setTimeout(async () => {
+        try {
+          const res = await productApi.createProduct({
+            ...inputProduct,
+            colors: newL,
+          });
+          if (res) {
+            handleClearState();
+            alert("Thêm thành công !");
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
-    }, 3000);
+      }, 3000);
+    } else {
+      alert("Chưa điền đủ thông tin !");
+    }
   };
   const handleClearState = () => {
     setColorsProduct([]);
@@ -184,6 +201,7 @@ const Home = () => {
     if (keyword) {
       setListKeyWords((prev) => [...prev, keyword]);
       setKeyword("");
+      inputKeywordRef.current.focus();
     } else {
       alert("Bạn chưa nhập từ khóa !");
     }
@@ -263,17 +281,14 @@ const Home = () => {
               onChange={(e) =>
                 setInputProduct((prev) => ({ ...prev, brand: e.target.value }))
               }
+              defaultValue={inputProduct.brand}
             >
-              <option value="" selected={!inputProduct.brand}>
+              <option value="" disabled>
                 Sản phẩm này thuộc thương hiệu nào ?
               </option>
               {brandList.length > 0 &&
                 brandList.map((brand) => (
-                  <option
-                    selected={brand._id === inputProduct.brand}
-                    value={brand._id}
-                    key={brand._id}
-                  >
+                  <option value={brand._id} key={brand._id}>
                     {brand.name}
                   </option>
                 ))}
@@ -290,14 +305,15 @@ const Home = () => {
                   category: e.target.value,
                 }))
               }
+              defaultValue={inputProduct.category}
             >
-              <option value="" selected={!inputProduct.category}>
+              <option value="" disabled>
                 Danh mục sản phẩm thuộc loại nào ?
               </option>
               {categoryList.length > 0 &&
                 categoryList.map((category) => (
                   <option
-                    selected={category._id === inputProduct.category}
+                    // selected={category._id === inputProduct.category}
                     key={category._id}
                     value={category._id}
                   >
@@ -348,8 +364,9 @@ const Home = () => {
               onChange={(e) =>
                 setInputProduct((prev) => ({ ...prev, gender: e.target.value }))
               }
+              defaultValue={inputProduct.gender}
             >
-              <option value="" selected={!inputProduct.gender}>
+              <option value="" disabled>
                 Sản phẩm dành cho ai ?
               </option>
               <option value="men">Nam</option>
@@ -363,6 +380,7 @@ const Home = () => {
               <input
                 type="text"
                 value={keyword}
+                ref={inputKeywordRef}
                 onChange={(e) => setKeyword(e.target.value)}
               />
               <button onClick={handleAddKeyWord}>Thêm</button>
