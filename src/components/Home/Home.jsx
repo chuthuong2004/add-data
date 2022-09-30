@@ -78,7 +78,7 @@ const Home = () => {
       inputProduct.name &&
       inputProduct.description &&
       inputProduct.price &&
-      inputProduct.discount &&
+      inputProduct.discount >= 0 &&
       inputProduct.brand &&
       inputProduct.category &&
       inputProduct.deliveryReturnPolicy &&
@@ -210,7 +210,7 @@ const Home = () => {
     const newList = list.filter((listItem) => listItem !== item);
     cb(newList);
   };
-
+  console.log("data: ", inputProduct);
   return (
     <>
       <div>
@@ -281,7 +281,7 @@ const Home = () => {
               onChange={(e) =>
                 setInputProduct((prev) => ({ ...prev, brand: e.target.value }))
               }
-              defaultValue={inputProduct.brand}
+              value={inputProduct.brand}
             >
               <option value="" disabled>
                 Sản phẩm này thuộc thương hiệu nào ?
@@ -305,7 +305,7 @@ const Home = () => {
                   category: e.target.value,
                 }))
               }
-              defaultValue={inputProduct.category}
+              value={inputProduct.category}
             >
               <option value="" disabled>
                 Danh mục sản phẩm thuộc loại nào ?
@@ -364,7 +364,7 @@ const Home = () => {
               onChange={(e) =>
                 setInputProduct((prev) => ({ ...prev, gender: e.target.value }))
               }
-              defaultValue={inputProduct.gender}
+              value={inputProduct.gender}
             >
               <option value="" disabled>
                 Sản phẩm dành cho ai ?
