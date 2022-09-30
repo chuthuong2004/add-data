@@ -1,8 +1,8 @@
 body {
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
 }
 .container {
   width: 100%;
@@ -11,14 +11,14 @@ body {
   justify-content: center;
   letter-spacing: 1px;
   font-size: 14px;
-  position: relative;
+  gap: 50px;
 }
 .form-add {
   border: 1px solid rgb(233, 229, 229);
   width: 100%;
   margin: 30px;
-  min-width:600px;
-  margin-bottom: 600px;
+  max-width:600px;
+  height: max-content;
   padding: 20px;
   border-radius: 6px;
 }
@@ -59,6 +59,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 400px;
+  margin-top: 50px;
 }
 .logout-container span {
   color: red;
@@ -71,7 +73,6 @@ body {
   background-color: rgb(230, 220, 220);
   padding: 10px;
   gap: 20px;
-  width: 400px;
   border-radius:10px;
 }
 .login input {
@@ -99,4 +100,104 @@ button {
   cursor: pointer;
   border: none;
   font-size: 16px;
+}
+.add-color {
+  display: flex ;
+  border: 1px solid red;
+  padding: 10px;
+  border-radius: 10px;
+  flex-direction: row;
+  align-items: center;
+}
+.add-color div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.color-container {
+  width: 300px;
+}
+.add-color div label {
+  min-width:70px;
+}
+.add-color button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: rgb(100, 165, 230);
+
+}
+.size-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+ .size {
+  border: 1px solid red;
+  border-radius: 10px;
+  padding: 10px;
+}
+.result-color {
+  border: none;
+}
+.card-corner {
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid rgb(73, 238, 87);
+  padding: 10px;
+  width: 320px;
+}
+.image-small {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+.image-medium {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+#image-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#image-container .image-medium,#image-container .image-small {
+  flex:1;
+}
+#size-rs-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#keyword {
+  border: 1px solid blue;
+  padding: 10px;
+  border-radius:10px;
+}
+#keyword #keyword-input {
+  display: flex;
+  flex-direction: row;
+}
+#keyword #keyword-input input {
+  flex: 1;
+}
+#keyword #keyword-input button {
+  border: 1px solid blue;
+  border-radius:10px;
+  background-color: rgb(80, 99, 139);
+  padding: 5px 15px;
+  color: #aaa3a3;
+}
+#key-rs-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#key-rs-container span {
+  border: 1px solid green;
+  border-radius:10px;
+  cursor: pointer;
+  padding: 5px 10px;
 }

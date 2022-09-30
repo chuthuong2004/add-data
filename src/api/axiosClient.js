@@ -18,30 +18,21 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 axiosClient.interceptors.request.use(async (config) => {
-  // if (!authTokens) {
-  //   let authTokens = localStorage.getItem("authTokens")
-  //     ? JSON.parse(localStorage.getItem("authTokens"))
-  //     : null;
-  //   config.headers.Authorization = `Bearer ${authTokens?.accessToken}`;
-  // }
-  // const user = jwt_decode(authTokens?.accessToken);
-  // const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-  // if (!isExpired) return config;
-  // const response = await axios.post(`${baseURL}/auth/refresh`, {
-  //   refresh: authTokens.refreshToken,
-  // });
-  // localStorage.setItem("authTokens", JSON.stringify(response.data));
-  // config.headers.Authorization = `Bearer ${response.data?.accessToken}`;
+  let authTokens = localStorage.getItem("authTokens")
+    ? JSON.parse(localStorage.getItem("authTokens"))
+    : null;
+  config.headers.Authorization = `Bearer ${authTokens?.accessToken}`;
+  config.headers["x-refresh"] = authTokens?.refreshToken;
   return config;
 });
 axiosClient.interceptors.response.use(
   async (response) => {
-    if (response.headers && response.headers["x-refresh"]) {
+    if (response.headers && response.headers["x-access-token"]) {
       localStorage.setItem(
         "authTokens",
         JSON.stringify({
           ...authTokens,
-          accessToken: response.headers["x-refresh"],
+          accessToken: response.headers["x-access-token"],
         })
       );
       console.log("đã set new accessToken");
@@ -52,7 +43,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    throw error;
+    throw error.response.data;
   }
 );
 export default axiosClient;

@@ -3,7 +3,9 @@ import axiosClient from "./axiosClient";
 const productApi = {
   createProduct: (data) => {
     const url = "/admin/product/new";
-    return axiosClient.post(url, { data });
+    console.log("api 06");
+    console.log(data);
+    return axiosClient.post(url, data);
   },
   getAllProduct: (params) => {
     const url = "/products";

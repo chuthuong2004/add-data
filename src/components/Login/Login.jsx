@@ -24,7 +24,7 @@ const Login = () => {
       setError("Vui lòng đăng nhập tài khoản admin mới có thể thêm product !");
     } catch (error) {
       console.log(error);
-      setError(error.response.data.message);
+      setError(error.message);
     }
     SetEmail("");
     setPassword("");
